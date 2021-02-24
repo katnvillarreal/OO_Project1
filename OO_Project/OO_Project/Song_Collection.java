@@ -35,6 +35,14 @@ public class Song_Collection {
 			}
 		}
 	}
+	
+	public void editSong(Song s) {
+		for(int i = 0; i < size; i++) {
+			if(songs[i].getTrackId() == s.getTrackId()) {
+				songs[i] = s;
+			}
+		}
+	}
 	private void doubleArray () {
 		Song[] newSongs = new Song[songs.length*2];
 		for (int i = 0; i < size; i++) {
