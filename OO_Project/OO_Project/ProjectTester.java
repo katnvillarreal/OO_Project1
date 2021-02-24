@@ -6,8 +6,9 @@ import java.util.*;
 public class ProjectTester {
 
 	public static void main(String[] args) {
-		Song_Collection songList = new Song_Collection("./OO_Project/finalTrack.csv");
-
+		Song_Collection songList = new Song_Collection("./OO_Project/finalTracks.csv");
+		
+		songList.writeFile("./OO_Project/testWrite.csv");
 	}
 
 }

@@ -109,7 +109,7 @@ public class Song_Collection {
 				String track = a[3];
 				String album = a[4];
 				int year = Integer.parseInt(a[5]);
-				double lon = Double.parseDouble(a[5]);
+				double lon = Double.parseDouble(a[6]);
 				addSong(new Song(track_id, artist, genre, track, album, year, lon));
 			}
 		} 
@@ -126,7 +126,7 @@ public class Song_Collection {
 					String track = a[3];
 					String album = a[4];
 					int year = Integer.parseInt(a[5]);
-					double lon = Double.parseDouble(a[5]);
+					double lon = Double.parseDouble(a[6]);
 					addSong(new Song(track_id, artist, genre, track, album, year, lon));
 				}
 			} 
