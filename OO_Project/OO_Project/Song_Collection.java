@@ -42,6 +42,51 @@ public class Song_Collection {
 		}		
 		songs = newSongs;
 	}
+	
+	public Iterator<Song> iterator() {
+		return new SongIterator<Song>(songs,size);
+	}
+	
+	public Song findSong(int id) {
+		for (int i = 0; i < size; i++) {
+			if(songs[i].getTrackId() == id) {
+				return songs[i];
+			}
+		}
+		throw new NoSuchElementException("not present");
+	}
+	public Song_Collection findArtist(String artist) {
+		Song_Collection newSet = new Song_Collection();
+		for (int i = 0; i < size; i++) {
+			if(songs[i].getArtist().equals(artist)) {
+				newSet.addSong(songs[i]);
+			}
+		}
+		return newSet;
+	}
+	
+	public Song findSong(String artist, String track, String album) {
+		for (int i = 0; i < size; i++) {
+			if(songs[i].getArtist().equals(artist)&&
+			   songs[i].getTitle().equals(track)&&
+			   songs[i].getAlbum().equals(album)) {
+				return songs[i];
+			}
+		}
+		throw new NoSuchElementException("not present");
+	}
+	
+	public Song_Collection genreAndYear(String g, int y) {
+		Song_Collection newSet = new Song_Collection();
+		for (int i = 0; i < size; i++) {
+			if(songs[i].getGenre().equals(g)&&
+			   songs[i].getYear()==y) {
+				newSet.addSong(songs[i]);
+			}
+		}
+		return newSet;
+	}
+	
 	public String toString() {
 		String toReturn = "";
 		for (int i = 0; i < size; i++) {
