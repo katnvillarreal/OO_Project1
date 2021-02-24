@@ -78,13 +78,13 @@ public class Song {
 	
 	public String toString() {
 		String toReturn = "";
-		toReturn += "Track Id: " + track_id;
-		toReturn += "Artist: " + artist_name;
-		toReturn += "Genre: " + genre;
-		toReturn += "Track: " + track_title;
-		toReturn += "Album: " + album_title;
-		toReturn += "Year: " + year_created;
-		toReturn += "Artist Longitude: " + artist_longitude;
+		toReturn += "Track Id: " + track_id +"\n";
+		toReturn += "Artist: " + artist_name +"\n";
+		toReturn += "Genre: " + genre +"\n";
+		toReturn += "Track: " + track_title +"\n";
+		toReturn += "Album: " + album_title +"\n";
+		toReturn += "Year: " + year_created +"\n";
+		toReturn += "Artist Longitude: " + artist_longitude +"\n";
 		
 		return toReturn;
 	}

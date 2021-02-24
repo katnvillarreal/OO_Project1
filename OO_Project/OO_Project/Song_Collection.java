@@ -35,6 +35,14 @@ public class Song_Collection {
 			}
 		}
 	}
+	
+	public void editSong(Song s) {
+		for(int i = 0; i < size; i++) {
+			if(songs[i].getTrackId() == s.getTrackId()) {
+				songs[i] = s;
+			}
+		}
+	}
 	private void doubleArray () {
 		Song[] newSongs = new Song[songs.length*2];
 		for (int i = 0; i < size; i++) {
@@ -109,7 +117,7 @@ public class Song_Collection {
 				String track = a[3];
 				String album = a[4];
 				int year = Integer.parseInt(a[5]);
-				double lon = Double.parseDouble(a[5]);
+				double lon = Double.parseDouble(a[6]);
 				addSong(new Song(track_id, artist, genre, track, album, year, lon));
 			}
 		} 
@@ -126,7 +134,7 @@ public class Song_Collection {
 					String track = a[3];
 					String album = a[4];
 					int year = Integer.parseInt(a[5]);
-					double lon = Double.parseDouble(a[5]);
+					double lon = Double.parseDouble(a[6]);
 					addSong(new Song(track_id, artist, genre, track, album, year, lon));
 				}
 			} 
