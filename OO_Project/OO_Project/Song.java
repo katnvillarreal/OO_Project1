@@ -1,8 +1,5 @@
 package OO_Project;
 
-import java.io.*;
-import java.util.*;
-
 public class Song {
 	private int track_id;
 	private String artist_name;
