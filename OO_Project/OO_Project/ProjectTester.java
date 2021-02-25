@@ -1,8 +1,5 @@
 package OO_Project;
 
-import java.io.*;
-import java.util.*;
-
 public class ProjectTester {
 
 	public static void main(String[] args) {
