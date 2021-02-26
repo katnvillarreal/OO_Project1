@@ -16,11 +16,13 @@ public class Song_Collection {
 		fileName = null;
 	}
 	public Song_Collection(String fn) {
+		// constructor when given a filename
 		this();
 		fileName = fn;
 		readFile();
 	}	
 	public void addSong(Song s) {
+		//Adding a song to the collection
 		if (size >= songs.length)
 			doubleArray();
 		songs[size] = s;
@@ -28,6 +30,7 @@ public class Song_Collection {
 	}
 	
 	public void removeSong (int id) {
+		//Removing a song from the collection
 		for(int i = 0; i < size; i++) {
 			if(songs[i].getTrackId()==id) {
 				songs[i] = songs[size-1];
@@ -37,6 +40,8 @@ public class Song_Collection {
 	}
 	
 	public void editSong(Song s) {
+		//Editing a song
+		//Based on the track id given by s change the song to reflect the song qualities given
 		for(int i = 0; i < size; i++) {
 			if(songs[i].getTrackId() == s.getTrackId()) {
 				songs[i] = s;
@@ -44,6 +49,7 @@ public class Song_Collection {
 		}
 	}
 	private void doubleArray () {
+		//increase the size of the array
 		Song[] newSongs = new Song[songs.length*2];
 		for (int i = 0; i < size; i++) {
 			newSongs[i] = songs[i];
@@ -52,10 +58,12 @@ public class Song_Collection {
 	}
 	
 	public Iterator<Song> iterator() {
+		// create an iterator
 		return new SongIterator<Song>(songs,size);
 	}
 	
 	public Song findSong(int id) {
+		// look up a song based on the song id given
 		for (int i = 0; i < size; i++) {
 			if(songs[i].getTrackId() == id) {
 				return songs[i];
@@ -64,6 +72,7 @@ public class Song_Collection {
 		throw new NoSuchElementException("not present");
 	}
 	public Song_Collection findArtist(String artist) {
+		// based on the sring given return a collection with all the songs that have this artist
 		Song_Collection newSet = new Song_Collection();
 		for (int i = 0; i < size; i++) {
 			if(songs[i].getArtist().equals(artist)) {
@@ -74,6 +83,7 @@ public class Song_Collection {
 	}
 	
 	public Song findSong(String artist, String track, String album) {
+		//find a song based on the song title, artist name and album name
 		for (int i = 0; i < size; i++) {
 			if(songs[i].getArtist().equals(artist)&&
 			   songs[i].getTitle().equals(track)&&
@@ -85,6 +95,8 @@ public class Song_Collection {
 	}
 	
 	public Song_Collection genreAndYear(String g, int y) {
+		//give genre and year of release return a collection with all the songs that 
+		// have the same genre and release year
 		Song_Collection newSet = new Song_Collection();
 		for (int i = 0; i < size; i++) {
 			if(songs[i].getGenre().equals(g)&&
@@ -96,6 +108,7 @@ public class Song_Collection {
 	}
 	
 	public String toString() {
+		//print the collection
 		String toReturn = "";
 		for (int i = 0; i < size; i++) {
 			toReturn += songs[i]+"\n";
@@ -104,6 +117,7 @@ public class Song_Collection {
 	}
 
 	private void readFile () {
+		//read in a given file
 		BufferedReader lineReader = null;
 		try {
 			FileReader fr = new FileReader(fileName);

@@ -1,3 +1,8 @@
+/*
+ * Name: Kathryn Villarreal
+ * Class: OO_Software 9AM
+ */
+
 package OO_Project;
 
 public class ProjectTester {
@@ -17,7 +22,7 @@ public class ProjectTester {
 		System.out.println("------------------------------------------------------");
 		
 		//Multiple inputs One song
-		//Data I want: 029526,8bit Betty,Chiptune;Chip Music,Blast Off!,too bleep to bloop,2010,0.0
+		//Data I want: 029526,8bit Betty,Chiptune;Chip Music,Blast Off!,too bleep to bloop,2021,0.0
 		Song foundByATA = songList.findSong("8bit Betty", "Blast Off!", "too bleep to bloop");
 		System.out.println(foundByATA);
 		System.out.println("------------------------------------------------------");
@@ -45,5 +50,4 @@ public class ProjectTester {
 		//Write new song csv
 		songList.writeFile("./OO_Project/testWrite.csv");
 	}
-
 }
