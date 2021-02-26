@@ -10,6 +10,7 @@ public class Song {
 	private double artist_longitude;
 	
 	public Song() {
+		//default constructor
 		track_id = 0;
 		artist_name = "not set";
 		genre = "not set";
@@ -20,6 +21,7 @@ public class Song {
 	}
 	
 	public Song(int id, String artist, String g, String track, String album, int year, double lon) {
+		//constructor when given all the info
 		track_id = id;
 		artist_name = artist;
 		genre = g;
@@ -29,6 +31,7 @@ public class Song {
 		artist_longitude = lon;
 	}
 	
+	//generic getters and setter for each private data member
 	public int getTrackId() {
 		return track_id;
 	}
