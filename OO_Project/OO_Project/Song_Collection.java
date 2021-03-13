@@ -21,6 +21,18 @@ public class Song_Collection {
 		fileName = fn;
 		readFile();
 	}	
+	
+	public int getSize() {
+		return size;
+	}
+	
+	public Song getFirst() {
+		return songs[0];
+	}
+	
+	public Song[] getSongs() {
+		return songs;
+	}
 	public void addSong(Song s) {
 		//Adding a song to the collection
 		if (size >= songs.length)
@@ -101,6 +113,18 @@ public class Song_Collection {
 		for (int i = 0; i < size; i++) {
 			if(songs[i].getGenre().equals(g)&&
 			   songs[i].getYear()==y) {
+				newSet.addSong(songs[i]);
+			}
+		}
+		return newSet;
+	}
+	
+	public Song_Collection getGenre(String g) {
+		//give genre and year of release return a collection with all the songs that 
+		// have the same genre and release year
+		Song_Collection newSet = new Song_Collection();
+		for (int i = 0; i < size; i++) {
+			if(songs[i].getGenre().equals(g)) {
 				newSet.addSong(songs[i]);
 			}
 		}
