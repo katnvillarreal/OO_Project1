@@ -2,3 +2,10 @@
 /Song.class
 /Song_Collection.class
 /SongIterator.class
+/MusicPanel.class
+/MusicPanel$ButtonListener.class
+/MusicPanel$NextListener.class
+/MusicPanel$PrevListener.class
+/MusicPanel$disListener.class
+/MusicPanel$likeListener.class
+/MusicPanel$PlaylistListener.class
