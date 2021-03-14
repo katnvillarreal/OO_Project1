@@ -9,3 +9,7 @@
 /MusicPanel$disListener.class
 /MusicPanel$likeListener.class
 /MusicPanel$PlaylistListener.class
+/MusicPanel$AddSongListener.class
+/MusicPanel$EditSongListener.class
+/MusicPanel$DeleteSongListener.class
+/MusicPanel$EditSongListener$1.class
