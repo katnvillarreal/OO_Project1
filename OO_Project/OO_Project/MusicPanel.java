@@ -24,6 +24,7 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
+import javax.swing.JScrollPane;
 
 public class MusicPanel extends JPanel{
 	private static final int DEFAULT_SIZE = 3;
@@ -44,8 +45,10 @@ public class MusicPanel extends JPanel{
 	private JButton btnAddSong;
 	private JButton btnEditSong;
 	private JButton btnDeleteSong;
+	private JScrollPane scrollPane;
 	
 	public MusicPanel() {
+		// Create Panel
 		setForeground(Color.DARK_GRAY);
 		setBorder(new BevelBorder(BevelBorder.RAISED, new Color(128, 128, 128), Color.GRAY, null, null));
 		setLayout(null);
@@ -98,7 +101,7 @@ public class MusicPanel extends JPanel{
 		lblCurrentSong.setForeground(Color.WHITE);
 		lblCurrentSong.setFont(new Font("Consolas", Font.BOLD, 16));
 		lblCurrentSong.setBackground(Color.DARK_GRAY);
-		lblCurrentSong.setBounds(100, 11, 300, 39);
+		lblCurrentSong.setBounds(100, 11, 300, 57);
 		panel.add(lblCurrentSong);
 		
 		// Next Song Button
@@ -119,12 +122,6 @@ public class MusicPanel extends JPanel{
 		btnPrev.addActionListener(new PrevListener());
 		panel.add(btnPrev);
 		
-		// Song Progress Bar
-		progressBar = new JProgressBar(0,60);
-		progressBar.setBounds(100, 61, 300, 7);
-		progressBar.setValue(0);
-		panel.add(progressBar);
-		
 		// Weird Song Label
 		JLabel lblWeirdSongLookup = new JLabel("Weird Song Lookup");
 		lblWeirdSongLookup.setBackground(Color.DARK_GRAY);
@@ -134,13 +131,16 @@ public class MusicPanel extends JPanel{
 		lblWeirdSongLookup.setBounds(118, 11, 241, 40);
 		add(lblWeirdSongLookup);
 		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 72, 184, 242);
+		add(scrollPane);
+		
 		// Queue Area
 		textArea = new JTextArea(queue.toString());
+		scrollPane.setViewportView(textArea);
 		textArea.setForeground(Color.WHITE);
 		textArea.setEditable(false);
 		textArea.setBackground(Color.GRAY);
-		textArea.setBounds(10, 72, 184, 242);
-		add(textArea);
 		
 		// Queue Label
 		JLabel lblQueuedSongs = new JLabel("Queue");
@@ -158,12 +158,12 @@ public class MusicPanel extends JPanel{
 		comboBox.addActionListener(new PlaylistListener());
 		add(comboBox);
 		
-		playButton = new JToggleButton("Play/Pause");
-		playButton.setFont(new Font("Courier New", Font.PLAIN, 12));
-		playButton.setForeground(Color.WHITE);
-		playButton.setBackground(Color.GRAY);
-		playButton.setBounds(204, 290, 112, 27);
-		add(playButton);
+//		playButton = new JToggleButton("Play/Pause");
+//		playButton.setFont(new Font("Courier New", Font.PLAIN, 12));
+//		playButton.setForeground(Color.WHITE);
+//		playButton.setBackground(Color.GRAY);
+//		playButton.setBounds(204, 290, 112, 27);
+//		add(playButton);
 		
 		
 		// Playlists Label
@@ -207,6 +207,7 @@ public class MusicPanel extends JPanel{
 		
 	}
 	
+	// Set the current playlist for the queue and update the current song
 	public void setPlaylist(Song_Collection p) {
 		currentPlaylist = p;
 		currentSong = currentPlaylist.getFirst();
@@ -214,25 +215,27 @@ public class MusicPanel extends JPanel{
 		queue = setQueue(currentSong, currentPlaylist);
 		textArea.setText(queue.toString());
 	}
+	// Set the Queue area with the song info
 	public Song_Collection setQueue(Song s, Song_Collection p) {
 		Song_Collection q = new Song_Collection();
 		for(int i = s.getTrackId()+1; i < MAX_ID; i++) {
 			try {
-				if (q.getSize()<3) {
+				if (q.getSize()<5) {
 					q.addSong(p.findSong(i));
 				}
 			}catch(Exception e){
 				continue;
 			}
-			
 		}
 		return q;
 	}
 	
+	//Listener for the "Next" button
 	private class NextListener implements ActionListener {
 		public void actionPerformed (ActionEvent event) {
 			for(int i = currentSong.getTrackId() + 1; i < MAX_ID; i++) {
 				try {
+					//Changes to the next song and updates the queue
 					currentSong = currentPlaylist.findSong(i);
 					lblCurrentSong.setText("Current Song:" + currentSong.getTitle());
 					queue = setQueue(currentSong, currentPlaylist);
@@ -245,10 +248,12 @@ public class MusicPanel extends JPanel{
 		}
 	}
 	
+	//Listener for the "Prev" button move back in the queue
 	private class PrevListener implements ActionListener {
 		public void actionPerformed (ActionEvent event) {
 			for(int i = currentSong.getTrackId()-1; i > 0; i--) {
 				try {
+					// Move back in the queue and set the current song to the previous song
 					currentSong = currentPlaylist.findSong(i);
 					lblCurrentSong.setText("Current Song:" + currentSong.getTitle());
 					queue = setQueue(currentSong, currentPlaylist);
@@ -261,15 +266,23 @@ public class MusicPanel extends JPanel{
 		}
 	}
 	
+	//Listener for the Genre dropdown and changes the current playlist based on the genre chosen
 	private class PlaylistListener implements ActionListener {
 		public void actionPerformed (ActionEvent event) {
 			Object genre = comboBox.getSelectedItem();
-			setPlaylist(all.getGenre((String)genre));
+			if (genre == "All") {
+				setPlaylist(all);
+			}
+			else {
+				setPlaylist(all.getGenre((String)genre));
+			}
 		}
 	}
 	
+	// Listener for the "Add Song" button
 	private class AddSongListener implements ActionListener {
 		public void actionPerformed (ActionEvent event) {
+			// Make some temp variables
 			boolean tryAgain = false;
 			String id = new String();
 			String newArtist = new String();
@@ -291,6 +304,7 @@ public class MusicPanel extends JPanel{
 					newAlbum = JOptionPane.showInputDialog("Enter the album title");
 					newYear = JOptionPane.showInputDialog("Enter the year of creation");
 					newLon = JOptionPane.showInputDialog("Enter the longitude");
+					// Convert strings to doubles or ints
 					newId = Integer.parseInt(id);
 					year = Integer.parseInt(newYear);
 					lon = Double.parseDouble(newLon);
@@ -308,6 +322,7 @@ public class MusicPanel extends JPanel{
 		}
 	}
 	
+	// Listener for "Delete Song" button
 	private class DeleteSongListener implements ActionListener {
 		public void actionPerformed (ActionEvent event) {
 			boolean tryAgain = false;
@@ -315,7 +330,7 @@ public class MusicPanel extends JPanel{
 			int remId = 0;
 			do {
 				try {
-					// Get the attributes of the new song
+					// Get the id of the song you want removed
 					id = JOptionPane.showInputDialog("Enter the Song id to be removed");
 					remId = Integer.parseInt(id);
 					tryAgain = false;
@@ -323,10 +338,11 @@ public class MusicPanel extends JPanel{
 					tryAgain = true;
 				} 
 			} while (tryAgain == true);
-			//Check if current song
+			//Check if current song is what is to be deleted
 			if(remId == currentSong.getTrackId()) {
 				for(int i = currentSong.getTrackId() + 1; i < MAX_ID; i++) {
 					try {
+						// update current song to the next song
 						currentSong = currentPlaylist.findSong(i);
 						lblCurrentSong.setText("Current Song:" + currentSong.getTitle());
 						break;
@@ -337,6 +353,7 @@ public class MusicPanel extends JPanel{
 			}
 			//Remove that song from all
 			all.removeSong(remId);
+			// update queue
 			queue = setQueue(currentSong, currentPlaylist);
 			textArea.setText(queue.toString());
 			all.writeFile("./OO_Project/finalTracks.csv");
@@ -362,7 +379,7 @@ public class MusicPanel extends JPanel{
 			final int remId = temp;
 			// create a dialog Box 
 			JDialog d = new JDialog(); 
-			d.setLayout(null);
+			d.getContentPane().setLayout(null);
 			d.setSize(300, 200);
 			// set visibility of dialog 
             d.setVisible(true);
@@ -371,63 +388,63 @@ public class MusicPanel extends JPanel{
             idLabel.setHorizontalAlignment(SwingConstants.LEFT);
             idLabel.setFont(new Font("Consolas", Font.PLAIN, 12));
             idLabel.setBounds(5, 5, 50, 20);
-            d.add(idLabel);
+            d.getContentPane().add(idLabel);
             
             JLabel artistLabel = new JLabel("Artist:");
             artistLabel.setHorizontalAlignment(SwingConstants.LEFT);
             artistLabel.setFont(new Font("Consolas", Font.PLAIN, 12));
             artistLabel.setBounds(5, 20, 50, 35);
-            d.add(artistLabel);
+            d.getContentPane().add(artistLabel);
             JTextField a = new JTextField(all.findSong(remId).getArtist());
             a.setBounds(50, 25, 100, 20);
-            d.add(a);
+            d.getContentPane().add(a);
             
             JLabel genreLabel = new JLabel("Genre:");
             genreLabel.setHorizontalAlignment(SwingConstants.LEFT);
             genreLabel.setFont(new Font("Consolas", Font.PLAIN, 12));
             genreLabel.setBounds(5, 35, 50, 50);
-            d.add(genreLabel);
+            d.getContentPane().add(genreLabel);
             JTextField g = new JTextField(all.findSong(remId).getGenre());
             g.setBounds(50, 47, 100, 20);
-            d.add(g);
+            d.getContentPane().add(g);
             
             JLabel trackLabel = new JLabel("Track:");
             trackLabel.setHorizontalAlignment(SwingConstants.LEFT);
             trackLabel.setFont(new Font("Consolas", Font.PLAIN, 12));
             trackLabel.setBounds(5, 50, 50, 65);
-            d.add(trackLabel);
+            d.getContentPane().add(trackLabel);
             JTextField t = new JTextField(all.findSong(remId).getTitle());
             t.setBounds(50, 70, 100, 20);
-            d.add(t);
+            d.getContentPane().add(t);
             
             JLabel albumLabel = new JLabel("Album:");
             albumLabel.setHorizontalAlignment(SwingConstants.LEFT);
             albumLabel.setFont(new Font("Consolas", Font.PLAIN, 12));
             albumLabel.setBounds(5, 65, 50, 80);
-            d.add(albumLabel);
+            d.getContentPane().add(albumLabel);
             JTextField al = new JTextField(all.findSong(remId).getAlbum());
             al.setBounds(50, 90, 100, 20);
-            d.add(al);
+            d.getContentPane().add(al);
             
             JLabel yearLabel = new JLabel("Year:");
             yearLabel.setHorizontalAlignment(SwingConstants.LEFT);
             yearLabel.setFont(new Font("Consolas", Font.PLAIN, 12));
             yearLabel.setBounds(5, 80, 50, 95);
-            d.add(yearLabel);
+            d.getContentPane().add(yearLabel);
             String q = String.valueOf(all.findSong(remId).getYear());
             JTextField y = new JTextField(q);
             y.setBounds(50, 115, 100, 20);
-            d.add(y);
+            d.getContentPane().add(y);
             
             JLabel lonLabel = new JLabel("Longitude:");
             lonLabel.setHorizontalAlignment(SwingConstants.LEFT);
             lonLabel.setFont(new Font("Consolas", Font.PLAIN, 12));
             lonLabel.setBounds(5, 95, 100, 110);
-            d.add(lonLabel);
+            d.getContentPane().add(lonLabel);
             q = String.valueOf(all.findSong(remId).getLon());
             JTextField l = new JTextField(q);
             l.setBounds(75, 140, 100, 20);
-            d.add(l);
+            d.getContentPane().add(l);
        
 			// save the edited fields of the song
             JButton btnSave = new JButton("Save");
@@ -435,6 +452,7 @@ public class MusicPanel extends JPanel{
     		btnSave.setBounds(200, 130, 75, 20);
     		btnSave.addActionListener(new ActionListener(){
     			public void actionPerformed(ActionEvent ae){
+    				// if save is clicked update the song
     				String tf_a = a.getText();
     				String tf_g = g.getText();
     				String tf_t = t.getText();
@@ -452,7 +470,7 @@ public class MusicPanel extends JPanel{
     				d.dispose();
     			}
     		});
-    		d.add(btnSave);     
+    		d.getContentPane().add(btnSave);     
 		}
 	}
 }
