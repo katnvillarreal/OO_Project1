@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.MatteBorder;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -17,17 +16,11 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JProgressBar;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JToggleButton;
 import javax.swing.JScrollPane;
 
 public class MusicPanel extends JPanel{
-	private static final int DEFAULT_SIZE = 3;
 	private static final int MAX_ID = 999999;
 	private Song currentSong;
 	private Song_Collection all;
@@ -38,10 +31,8 @@ public class MusicPanel extends JPanel{
 	private JLabel lblCurrentSong;
 	private JButton btnNext;
 	private JButton btnPrev;
-	private JProgressBar progressBar;
 	private JTextArea textArea;
 	private JComboBox comboBox;
-	private JToggleButton playButton;
 	private JButton btnAddSong;
 	private JButton btnEditSong;
 	private JButton btnDeleteSong;
