@@ -1,3 +1,9 @@
+/*
+ * Name: Kathryn Villarreal
+ * Course: OOSoftware 9AM 3381
+ * CRN: 22199
+ */
+
 package OO_Project;
 
 import java.awt.event.WindowAdapter;

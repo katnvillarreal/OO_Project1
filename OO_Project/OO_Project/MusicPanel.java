@@ -68,6 +68,7 @@ public class MusicPanel extends JPanel{
 		playlists = new ArrayList<String>();
 		for (int i = 0; i < all.getSongs().length; i++) {
 			try {
+				// Fill the playlist dropdown with the different available genres
 				Song s = all.getSongs()[i];
 				if(!playlists.contains(s.getGenre())) {
 					playlists.add(s.getGenre());
